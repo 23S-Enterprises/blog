@@ -26,14 +26,13 @@ export async function getStaticProps(context) {
   // It's important to default the slug so that it doesn't return "undefined"
   const { slug = "brodi-white-new-music-march-2023" } = context.params
   const post = await client.fetch(`
-    *[_type == "post" && slug.current == $slug][0]
-  `, { slug })
-  
-  return {
-    props: {
-      post
-    }
+  *[_type == "post" && slug.current == $slug][0]{title, "name": author->name}
+`, { slug })
+return {
+  props: {
+    post
   }
+}
 }
 
 export default Post
